@@ -149,6 +149,28 @@
   <!-- 每个plugins就是一个插件 -->
   <build>
     <plugins>
+
+      <!--其中的一个插件：mybatis逆向工程插件-->
+      <plugin>
+        <!--插件的GAV坐标-->
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.4.1</version>
+        <!--允许覆盖-->
+        <configuration>
+          <overwrite>true</overwrite>
+        </configuration>
+        <!--插件的依赖-->
+        <dependencies>
+          <!--mysql驱动依赖-->
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>

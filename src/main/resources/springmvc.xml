@@ -16,5 +16,5 @@
 <!--    设置文件上传核心组件-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></bean>
 <!--    设置注解驱动-->
-    <mvc:annotation-driven>
+    <mvc:annotation-driven/>
 </beans>
