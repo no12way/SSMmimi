@@ -2,7 +2,6 @@ package com.controller;
 
 import com.pojo.Admin;
 import com.service.AdminService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,7 @@ public class AdminAction {
     @Autowired
     AdminService adminService;
 
-    @RequestMapping("/login.action")
+    @RequestMapping("/login")
     public String login(String name, String pwd, HttpServletRequest request){
         //我们调用service层的方法,返回一个admin实体类
         Admin admin = adminService.login(name, pwd);

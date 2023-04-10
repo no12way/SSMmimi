@@ -94,7 +94,7 @@
                             <th>商品数量</th>
                             <th>操作</th>
                         </tr>
-                        <c:forEach items="${info.list}" var="p">
+                        <c:forEach items="${list}" var="p">
                             <tr>
                                 <td valign="center" align="center">
                                     <input type="checkbox" name="ck" id="ck" value="${p.pId}" onclick="ckClick()"></td>
