@@ -32,7 +32,7 @@ pageEncoding="UTF-8"%>
 						</tr>
 						<tr>
 							<td class="td1">密码：</td>
-							<td><input type="password"  value="000000" placeholder="Password" class="td2" name="pwd"></td>
+							<td><input type="password"  value="zwf" placeholder="Password" class="td2" name="pwd"></td>
 						</tr>
 						<tr>
 							<td></td>
@@ -41,7 +41,7 @@ pageEncoding="UTF-8"%>
 						<tr>
 							<td></td>
 							<td><input type="submit" value="登录" class="td3">
-								<a href="${pageContext.request.contextPath}/regist.jsp"><input type="button" value="注册" class="td3	"></a>
+								<a href="${pageContext.request.contextPath}/admin/regist.jsp"><input type="button" value="注册" class="td3	"></a>
 							</td>
 						</tr>
 					</table>
