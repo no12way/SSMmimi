@@ -94,7 +94,7 @@
                             <th>商品数量</th>
                             <th>操作</th>
                         </tr>
-                        <c:forEach items="${list}" var="p">
+                        <c:forEach items="${info.list}" var="p">
                             <tr>
                                 <td valign="center" align="center">
                                     <input type="checkbox" name="ck" id="ck" value="${p.pId}" onclick="ckClick()"></td>
@@ -125,7 +125,6 @@
                                     <li>
                                             <%--                                        <a href="${pageContext.request.contextPath}/prod/split.action?page=${info.prePage}" aria-label="Previous">--%>
                                         <a href="javascript:ajaxsplit(${info.prePage})" aria-label="Previous">
-
                                             <span aria-hidden="true">«</span></a>
                                     </li>
                                     <c:forEach begin="1" end="${info.pages}" var="i">
@@ -261,12 +260,12 @@
         var hprice = $("#hprice").val();
         //向服务发出ajax请求,请示page页中的所有数据,在当前页面上局部刷新显示
         $.ajax({
-            url: "${pageContext.request.contextPath}/prod/ajaxSplitpaging.action",
+            url: "${pageContext.request.contextPath}/prod/ajaxSplit",
             data: {"page": page,"pname":pname,"typeid":typeid,"lprice":lprice,"hprice":hprice},
             type: "post",
             success: function () {
                 //重新加载显示分页数据的容器
-                $("#table").load("http://localhost:8080/admin/product.jsp #table");
+                $("#table").load("http://localhost:8080/SSM/admin/product.jsp #table");
             }
         });
 
@@ -280,7 +279,7 @@
         var hprice = $("#hprice").val();
         $.ajax({
             type:"post",
-            url:"${pageContext.request.contextPath}/prod/ajaxSplitpaging.action",
+            url:"${pageContext.request.contextPath}/prod/ajaxSplit",
             data:{"pname":pname,"typeid":typeid,"lprice":lprice,"hprice":hprice},
             success:function () {
                 //刷新显示数据的容器
