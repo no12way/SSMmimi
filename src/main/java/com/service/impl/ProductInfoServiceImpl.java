@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ProductInfoServiceImp implements ProductInfoService {
+public class ProductInfoServiceImpl implements ProductInfoService {
     //业务层一定会调用dao层对象
     @Autowired
     ProductInfoMapper productInfoMapper;

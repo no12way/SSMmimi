@@ -15,22 +15,27 @@
 	</head>
     <script type="text/javascript">
         function fileChange(){
+			alert("change")
 			$.ajaxFileUpload({
-				url:"${pageContext.request.contextPath}/prod/ajaxImg.action",
+<%--				${pageContext.request.contextPath}--%>
+				url:"${pageContext.request.contextPath}/prod/ajaxImg",
 				secureuri: false,
 				fileElementId: 'pimage',
 				dataType:"json",
 				success:function (obj) {
-					//清空div
-					$("#imgDiv").empty();
+					$("#imgDiv").empty();  //清空原有数据
 					//创建一个图片的标签
 					var imgObj = $("<img>");
-					alert(obj.imgurl);
-					imgObj.attr("src","/image_big/"+obj.imgurl);
+					<%--// alert(obj.imgurl);${pageContext.request.contextPath}--%>
+					imgObj.attr("src","${pageContext.request.contextPath}/image_big/"+obj.imgurl);
 					imgObj.attr("width","100px");
 					imgObj.attr("height","100px");
 					//将图片追加到imgDiv
 					$("#imgDiv").append(imgObj);
+				},
+				error: function (e)
+				{
+					alert(e.message);
 				}
 			});
 
@@ -123,7 +128,7 @@
 								<input type="reset" value="取消" class="btn btn-default" onclick="myclose(${param.page})">
 								<script type="text/javascript">
 									function myclose(ispage) {
-										window.location="${pageContext.request.contextPath}/prod/split.action?page="+ispage;
+										window.location="${pageContext.request.contextPath}/prod/split?page="+ispage;
 									}
 								</script>
 							</td>

@@ -33,6 +33,17 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:springmvc.xml</param-value>
         </init-param>
+
+        <load-on-startup>0</load-on-startup>
+        <multipart-config>
+            <!--临时文件的目录-->
+            <location>D:\SSM\mimi\SSMmimi\src\main\webapp\image_big</location>
+            <!-- 上传文件最大2M -->
+            <max-file-size>2097152</max-file-size>
+            <!-- 上传文件整个请求不超过4M -->
+            <max-request-size>4194304</max-request-size>
+        </multipart-config>
+
     </servlet>
     <servlet-mapping>
         <!--
@@ -43,6 +54,9 @@
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
+
     <!--    注册spring框架-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

@@ -3,15 +3,19 @@ package com.controller;
 import com.github.pagehelper.PageInfo;
 import com.pojo.ProductInfo;
 import com.service.ProductInfoService;
+import com.utils.FileNameUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -44,6 +48,29 @@ public class ProductInfoAction {
         PageInfo info = productInfoService.splitPage(page, PAGE_SIZE);
         //把数据存放到session域中
         session.setAttribute("info", info);
+    }
+
+    @ResponseBody
+    @RequestMapping("/ajaxImg")
+    public Object ajaxImg(MultipartFile pimage,HttpServletRequest request){
+        //文件上传
+        //异步上传文件名,增加和更新就用这个名字
+        //给文件取名
+        String saveFileName = FileNameUtil.getUUIDFileName() + FileNameUtil.getFileType(pimage.getOriginalFilename());
+        try{
+        //取出路径
+        String realPath = request.getServletContext().getRealPath("/image_big");
+        System.out.println("realPath"+realPath);
+        //转存
+        pimage.transferTo(new File(realPath + File.separator + saveFileName));}
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        //上面的代码实现了文件上传的功能
+        //为了在客户端显示图片，要将存储的文件名回传下去，由于是自定义的上传插件，所以此处要手工处理JSON
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("imgurl",saveFileName);
+        return jsonObject.toString();
     }
 
 }

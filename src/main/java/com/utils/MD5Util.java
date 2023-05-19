@@ -14,27 +14,34 @@ public class MD5Util {
      *   但是可以使用暴力破解，这里的破解并非把摘要还原成原始数据，如暴力枚举法。
      *
      */
-    public final static String getMD5(String str){
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA");//创建具有指定算法名称的摘要
-            md.update(str.getBytes());                    //使用指定的字节数组更新摘要
-            byte mdBytes[] = md.digest();                 //进行哈希计算并返回一个字节数组
-
-            String hash = "";
-            for(int i= 0;i<mdBytes.length;i++){           //循环字节数组
-                int temp;
-                if(mdBytes[i]<0)                          //如果有小于0的字节,则转换为正数
-                    temp =256+mdBytes[i];
-                else
-                    temp=mdBytes[i];
-                if(temp<16)
-                    hash+= "0";
-                hash+=Integer.toString(temp,16);         //将字节转换为16进制后，转换为字符串
+    public static String getMD5(String password)
+    {
+        try
+        {
+            // 得到一个信息摘要器
+            MessageDigest digest = MessageDigest.getInstance("md5");
+            byte[] result = digest.digest(password.getBytes());
+            StringBuffer buffer = new StringBuffer();
+            // 把每一个byte 做一个与运算 0xff;
+            for (byte b : result)
+            {
+                // 与运算
+                int number = b & 0xff;// 加盐
+                String str = Integer.toHexString(number);
+                if (str.length() == 1)
+                {
+                    buffer.append("0");
+                }
+                buffer.append(str);
             }
-            return hash;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+
+            // 标准的md5加密后的结果
+            return buffer.toString();
         }
-        return null;
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+            return "";
+        }
     }
 }
