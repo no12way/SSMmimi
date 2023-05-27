@@ -21,4 +21,8 @@ public interface ProductInfoService {
     public PageInfo splitPage(int page, int pageSize);
 
     int save(ProductInfo productInfo);
+
+    ProductInfo getById(Integer pid);
+
+    int update(ProductInfo info);
 }

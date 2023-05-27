@@ -247,7 +247,7 @@
         var hprice = $("#hprice").val();
         //向服务器提交请求,传递商品id
         var str = "?pid="+pid+"&page="+page+"&pname="+pname+"&typeid="+typeid+"&lprice="+lprice+"&hprice="+hprice;
-        location.href = "${pageContext.request.contextPath}/prod/one.action" + str;
+        location.href = "${pageContext.request.contextPath}/prod/one" + str;
     }
 </script>
 <!--分页的AJAX实现-->

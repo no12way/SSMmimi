@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/addBook.css" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath }/js/ajaxfileupload.js"></script>
 	</head>
 
@@ -20,20 +21,20 @@
 			</div>
 			<script type="text/javascript">
 				function fileChange(){//注意：此处不能使用jQuery中的change事件，因此仅触发一次，因此使用标签的：onchange属性
-
+					alert("change")
 					$.ajaxFileUpload({
-						url: '/prod/ajaxImg.action',//用于文件上传的服务器端请求地址
+						url:"${pageContext.request.contextPath}/prod/ajaxImg",//用于文件上传的服务器端请求地址
 						secureuri: false,//一般设置为false
-						fileElementId: 'pimage',//文件上传控件的id属性  <input type="file" id="pimage" name="pimage" />
-						dataType: 'json',//返回值类型 一般设置为json
+						fileElementId: "pimage",//文件上传控件的id属性  <input type="file" id="pimage" name="pimage" />
+						dataType: "json",//返回值类型 一般设置为json
 						success: function(obj) //服务器成功响应处理函数
 						{
-
 							$("#imgDiv").empty();  //清空原有数据
 							//创建img 标签对象
 							var imgObj = $("<img>");
 							//给img标签对象追加属性
-							imgObj.attr("src","/image_big/"+obj.imgurl);
+							imgObj.attr("src","${pageContext.request.contextPath}/image_big/"+obj.imgurl);
+							alert("${pageContext.request.contextPath}/image_big/"+obj.imgurl)
 							imgObj.attr("width","100px");
 							imgObj.attr("height","100px");
 							//将图片img标签追加到imgDiv末尾
@@ -49,13 +50,13 @@
 				}
 			</script>
 <script type="text/javascript">
-	function myclose(ispage) {
-		window.location="${pageContext.request.contextPath}/admin/product.jsp?flag=split&ispage="+ispage;
+	function myclose() {
+		window.location="${pageContext.request.contextPath}/admin/product.jsp";
 		//window.close();
 	}
 </script>
 			<div id="table">
-				<form action="${pageContext.request.contextPath}/prod/update.action" enctype="multipart/form-data" method="post" id="myform">
+				<form action="${pageContext.request.contextPath}/prod/update" enctype="multipart/form-data" method="post" id="myform">
 					<input type="hidden" value="${prod.pId}" name="pId">
 					<input type="hidden" value="${prod.pImage}" name="pImage">
 
@@ -90,7 +91,7 @@
 						
 						<tr>
 							<td class="one">图片介绍</td>
-							<td> <br><div id="imgDiv" style="display:block; width: 40px; height: 50px;"><img src="/image_big/${prod.pImage}" width="100px" height="100px" ></div><br><br><br><br>
+							<td> <br><div id="imgDiv" style="display:block; width: 40px; height: 50px;"><img src="${pageContext.request.contextPath}/image_big/${prod.pImage}" width="100px" height="100px" ></div><br><br><br><br>
 								<input type="file" id="pimage" name="pimage" onchange="fileChange()">
 								<span id="imgName"></span><br>
 
@@ -138,7 +139,7 @@
 								<input type="submit" value="提交" class="btn btn-success">
 							</td>
 							<td>
-								<input type="reset" value="取消" class="btn btn-default" onclick="myclose(1)">
+								<input type="reset" value="取消" class="btn btn-default" onclick="myclose()">
 							</td>
 						</tr>
 					</table>

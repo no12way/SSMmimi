@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.File;
-import java.io.IOException;
+
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +102,57 @@ public class ProductInfoAction {
             //每次存完图片路径变量要清空(其实不清空也行)
             fileName = "";
             return "redirect:/prod/split";
+    }
+    //商品的编辑功能
+    @RequestMapping("one")
+    public String one(Integer pid,Integer page,Model model){
+
+        ProductInfo byId = productInfoService.getById(pid);
+        model.addAttribute("prod",byId);
+        model.addAttribute("page",page);
+
+
+        return "update";
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public String update(ProductInfo info,Integer page,HttpServletRequest request){
+        //判段有没有点击文件上传按钮
+        if(fileName != ""){
+            info.setpImage(fileName);
+        }
+
+        boolean flag = false;
+        //有没有时间改变
+        //此处要进行info对象的上架时间的更新
+        //首先要判断当前新更新上来的日期不能大于当前日期
+        if (info.getpDate() != null) {
+            if (info.getpDate().getTime() > System.currentTimeMillis()) {
+                //日期不正常了，则置为空，底层做更新处理时不做更改
+                info.setpDate(null);
+                flag=true;
+            }
+        }
+        //完成对象更新
+        int num = -1;
+        try {
+            num = productInfoService.update(info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (num > 0) {
+            if (flag) {
+                request.getSession().setAttribute("msg", "日期不能大于当前日期");
+            } else {
+                request.getSession().setAttribute("msg", "更新成功！");
+            }
+        } else {
+            request.getSession().setAttribute("msg", "更新失败");
+        }
+        fileName="";
+        return "redirect:/prod/split";
+
     }
 
 }
