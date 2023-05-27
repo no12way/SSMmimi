@@ -50,8 +50,8 @@
 				}
 			</script>
 <script type="text/javascript">
-	function myclose() {
-		window.location="${pageContext.request.contextPath}/admin/product.jsp";
+	function myclose(pid,ispage) {
+		window.location="${pageContext.request.contextPath}/admin/product.jsp?"+"pid=" + pid + "&page=" + ispage;
 		//window.close();
 	}
 </script>
@@ -139,7 +139,7 @@
 								<input type="submit" value="提交" class="btn btn-success">
 							</td>
 							<td>
-								<input type="reset" value="取消" class="btn btn-default" onclick="myclose()">
+								<input type="reset" value="取消" class="btn btn-default" onclick="myclose(1)">
 							</td>
 						</tr>
 					</table>

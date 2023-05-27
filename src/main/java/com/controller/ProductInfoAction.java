@@ -155,4 +155,57 @@ public class ProductInfoAction {
 
     }
 
+    //执行删除操作
+    @RequestMapping("/delete")
+    public String delete(Integer pid, HttpSession session) {
+        int num = productInfoService.delete(pid);
+        if (num > 0)
+            session.setAttribute("msg", "删除成功！");
+        else
+            session.setAttribute("msg", "删除失败！");
+
+        //增删改后用重定向跳转
+        return "redirect:/prod/deleteAjaxSplit";
+    }
+
+    /**
+     * 删除数据成功后的查询第一页数据返回
+     * @param request
+     * @return
+     */
+
+    @RequestMapping(value = "/deleteAjaxSplit")
+    public Object deleteAjaxSplit(HttpServletRequest request){
+        // 获取第一页的分页数据
+//        PageInfo info = productInfoService.splitPage(1,PAGE_SIZE);
+//        request.getSession().setAttribute("info",info);
+        return "product";
+    }
+
+    /**
+     * 根据结束的批量删除的字符串id删除数据
+     * @param pids
+     * @param request
+     * @return
+     */
+    @RequestMapping("/deleteBatch")
+    public String deleteBatch(String pids,HttpServletRequest request){
+        // 将页面传递过来的id通过逗号进行拆分成字符串数组pids[1,2,3]
+        String[] ps = pids.split(",");
+        try {
+            int num = productInfoService.deleteBatch(ps);
+            if(num > 0){
+                request.setAttribute("msg","商品批量删除成功");
+            }else{
+                request.setAttribute("msg", "商品批量删除失败");
+            }
+        } catch (Exception e) {
+            request.setAttribute("msg","商品信息不可删除");
+        }
+        // 一定要注意跳转的路径
+        return "forward:/prod/deleteAjaxSplit";
+    }
+
+
+
 }

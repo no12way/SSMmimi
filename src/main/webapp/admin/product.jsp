@@ -79,7 +79,7 @@
                         <input type="button" class="btn btn-warning" id="btn1"
                                value="新增商品">
                     </a>
-                    <input type="button" class="btn btn-warning" id="btn1"
+                    <input type="button" class="btn btn-warning" id="btn2"
                            value="批量删除" onclick="deleteBatch()">
                 </div>
                 <!--显示分页后的商品-->
@@ -202,14 +202,14 @@
 
                 //发送ajax请求,进行批量删除的提交
                 $.ajax({
-                    url:"${pageContext.request.contextPath}/prod/deleteBatch.action",
+                    url:"${pageContext.request.contextPath}/prod/deleteBatch",
                     data:{"pids":str},
                     type:"post",
                     dataType:"text",
                     success:function (msg) {
                         alert(msg);//批量删除成功!失败!不可删除!
                         //将页面上显示商品数据的容器重新加载
-                        $("#table").load("http://localhost:8080/admin/product.jsp #table");
+                        $("#table").load("http://localhost:8080/SSM/admin/product.jsp #table");
                     }
                 });
             }
@@ -227,13 +227,13 @@
             var lprice = $("#lprice").val();
             var hprice = $("#hprice").val();
             $.ajax({
-                url: "${pageContext.request.contextPath}/prod/delete.action",
+                url: "${pageContext.request.contextPath}/prod/delete",
                 data: {"pid": pid,"page": page,"pname":pname,"typeid":typeid,"lprice":lprice,"hprice":hprice},
                 type: "post",
                 dataType: "text",
                 success: function (msg) {
                     alert(msg);
-                    $("#table").load("http://localhost:8080/admin/product.jsp #table");
+                    $("#table").load("http://localhost:8080/SSM/admin/product.jsp #table");
                 }
             });
         }

@@ -52,4 +52,21 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return productInfoMapper.updateByPrimaryKeySelective(info);
     }
 
+    @Override
+    public int delete(Integer pid) {
+        int num = 0;
+        try{
+        num = productInfoMapper.deleteByPrimaryKey(pid);}
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return num;
+    }
+
+    @Override
+    public int deleteBatch(String[] ids) {
+        return productInfoMapper.deleteBatch(ids);
+    }
+
 }

@@ -25,4 +25,12 @@ public interface ProductInfoService {
     ProductInfo getById(Integer pid);
 
     int update(ProductInfo info);
+
+    int delete(Integer pid);
+    /**
+     * 批量删除商品功能
+     * @param ids
+     * @return
+     */
+    int deleteBatch(String[] ids);
 }

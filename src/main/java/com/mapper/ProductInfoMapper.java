@@ -27,4 +27,7 @@ public interface ProductInfoMapper {
     int updateByPrimaryKeySelective(ProductInfo row);
 
     int updateByPrimaryKey(ProductInfo row);
+
+    //批量删除商品的功能
+    int deleteBatch(String []ids);
 }
