@@ -36,4 +36,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return pageInfo;
     }
 
+    @Override
+    public int save(ProductInfo productInfo) {
+        return productInfoMapper.insert(productInfo);
+    }
+
 }

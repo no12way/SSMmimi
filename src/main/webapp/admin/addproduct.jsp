@@ -14,6 +14,9 @@
         <script type="text/javascript" src="${pageContext.request.contextPath }/js/ajaxfileupload.js"></script>
 	</head>
     <script type="text/javascript">
+		if(${"msg"}){
+			alert("${msg}");
+		}
         function fileChange(){
 			alert("change")
 			$.ajaxFileUpload({
@@ -28,6 +31,7 @@
 					var imgObj = $("<img>");
 					<%--// alert(obj.imgurl);${pageContext.request.contextPath}--%>
 					imgObj.attr("src","${pageContext.request.contextPath}/image_big/"+obj.imgurl);
+					alert("${pageContext.request.contextPath}/image_big/"+obj.imgurl)
 					imgObj.attr("width","100px");
 					imgObj.attr("height","100px");
 					//将图片追加到imgDiv
@@ -50,7 +54,7 @@
 			</div>
 
 			<div id="table">
-				<form  id="myform" action="${pageContext.request.contextPath}/prod/save.action">
+				<form  id="myform" action="${pageContext.request.contextPath}/prod/save">
 					<table>
 						<tr>
 							<td class="one">商品名称</td>

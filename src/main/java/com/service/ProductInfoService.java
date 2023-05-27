@@ -19,4 +19,6 @@ public interface ProductInfoService {
      * @return
      */
     public PageInfo splitPage(int page, int pageSize);
+
+    int save(ProductInfo productInfo);
 }

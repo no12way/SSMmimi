@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -25,6 +27,9 @@ public class ProductInfoAction {
     public static final int PAGE_SIZE = 5;
     @Autowired
     ProductInfoService productInfoService;
+
+    //文件的完整路径
+    String fileName;
     //查询全部数据
     @RequestMapping("/list")
     public String getList(Model model){
@@ -62,7 +67,11 @@ public class ProductInfoAction {
         String realPath = request.getServletContext().getRealPath("/image_big");
         System.out.println("realPath"+realPath);
         //转存
-        pimage.transferTo(new File(realPath + File.separator + saveFileName));}
+        pimage.transferTo(new File(realPath + File.separator + saveFileName));
+
+        fileName =  saveFileName;
+        }
+
         catch (Exception e){
             e.printStackTrace();
         }
@@ -71,6 +80,27 @@ public class ProductInfoAction {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("imgurl",saveFileName);
         return jsonObject.toString();
+    }
+
+    @RequestMapping("/save")
+    public String save(ProductInfo info,HttpServletRequest request){
+        info.setpImage(fileName);
+        info.setpDate(new Date());
+        int save = -1;
+
+        try{
+            save = productInfoService.save(info);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+            if (save > 0){
+                request.getSession().setAttribute("msg", "增加成功！");
+            }else {
+                request.getSession().setAttribute("msg", "增加失败!");
+            }
+            //每次存完图片路径变量要清空(其实不清空也行)
+            fileName = "";
+            return "redirect:/prod/split";
     }
 
 }
